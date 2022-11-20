@@ -1,37 +1,30 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import {
-  FLUSH,
-  PAUSE,
-  PERSIST,
-  persistStore,
-  PURGE,
-  REGISTER,
-  REHYDRATE,
-} from 'redux-persist';
-import { loginReducer } from './Auth/loginApi';
-import { contactsApi } from './Contacts/rtk';
-import contactsReducer from './Contacts/phonebook-reducer';
-import user from './Auth/user';
+import { configureStore  , getDefaultMiddleware } from "@reduxjs/toolkit";
+import {createdauthSlice} from './auth/auth-slice'
+import { contactReduser } from "./contacts/contact-slice";
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'
 
-const rootReducer = combineReducers({
-  contacts: contactsReducer,
-  [contactsApi.reducerPath]: contactsApi.reducer,
-  [loginReducer.reducerPath]: loginReducer.reducer,
-  user,
-});
 
-const store = configureStore({
-  reducer: rootReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
+const authPersistConfig = {
+  key: 'auth',
+   storage,
+  whitelist: ['token']
+}
+
+export const store = configureStore({
+    reducer: {
+        auth: persistReducer(authPersistConfig , createdauthSlice),
+        contacts: contactReduser
+    },
+     middleware: [
+    ...getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(contactsApi.middleware),
+    }),
+  ],
+  devTools: process.env.NODE_ENV === 'development',
 });
 
-let persistor = persistStore(store);
 
-const exp = { store, persistor };
-
-export default exp;
+    export const persistor = persistStore(store)
