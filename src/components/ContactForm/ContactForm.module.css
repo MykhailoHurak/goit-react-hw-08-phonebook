@@ -1,33 +1,29 @@
-.ContactForm {
-    width: 355px;
-    padding: 20px;
-    border: 2px solid black;
-    background-color: whitesmoke;       
+.input {
+  width: 180px;
+  padding: 5px;
+  display: block;
 }
 
-.ContactForm__title {
-    text-align: center;
+.form {
+  margin: 0 auto;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  padding: 30px;
+  border-radius: 3px;
+  width: 400px;
+  height: 200px;
+  background-color: rgb(240, 240, 240);
+  box-shadow: rgb(100 240 245) 33px 33px 99px;
 }
-
-.ContactForm__label {
-    width: 296px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 auto;
-    margin-top: 10px;
-}
-
-.ContactForm__input {
-    width: 200px;
-    height: 30px;
-}
-
-.ContactForm__button {
-    display: block;
-    margin: 0 auto;
-    padding: 10px;
-    border: 2px solid black;
-    background-color: orange;
-    cursor: pointer;
+.button {
+  font-size: 10px;
+  font-weight: 100;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border: none;
+  background-color: rgb(0, 247, 255);
+  width: 100px;
+  padding: 10px 20px;
+  margin: 20px;
 }

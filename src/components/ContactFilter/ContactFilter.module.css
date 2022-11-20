@@ -1,22 +1,9 @@
-.ContactFilter {
-    width: 355px;
-    padding: 20px;
-    padding-top: 0;
-    padding-bottom: 0;
-    background-color: whitesmoke;
+.p {
+  font-size: 14px;
+  font-weight: 100;
 }
-
-.ContactFilter__title {
-    text-align: center;
-}
-
-p {
-    text-align: center;
-}
-
-.ContactFilter__input {
-    display: block;
-    margin: 0 auto;
-    width: 280px;
-    height: 30px;
+.input {
+  background-color: #fff;
+  border-radius: 25px;
+  padding-left: 12px;
 }

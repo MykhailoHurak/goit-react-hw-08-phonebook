@@ -1,58 +1,37 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { API } from './api';
-import { filterSlice } from './filter';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from 'redux-persist';
+import { loginReducer } from './Auth/loginApi';
+import { contactsApi } from './Contacts/rtk';
+import contactsReducer from './Contacts/phonebook-reducer';
+import user from './Auth/user';
 
-export const store = configureStore({
-    reducer: {
-        filter: filterSlice.reducer,
-        [API.reducerPath]: API.reducer,
-    },
-
-    middleware: getDefaultMiddleware => [
-        ...getDefaultMiddleware(),
-        API.middleware,
-    ],
+const rootReducer = combineReducers({
+  contacts: contactsReducer,
+  [contactsApi.reducerPath]: contactsApi.reducer,
+  [loginReducer.reducerPath]: loginReducer.reducer,
+  user,
 });
 
-// HW-06 ==================================================================
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(contactsApi.middleware),
+});
 
-// import { configureStore } from '@reduxjs/toolkit';
-// import filter from './filter';
-// import contacts from './contacts';
-// import {
-//     persistStore,
-//     persistReducer,
-//     FLUSH,
-//     REHYDRATE,
-//     PAUSE,
-//     PERSIST,
-//     PURGE,
-//     REGISTER,
-// } from 'redux-persist';
-// import storage from 'redux-persist/lib/storage';
+let persistor = persistStore(store);
 
-// const contactsPersistConfig = {
-//     key: 'contacts',
-//     version: 1,
-//     storage,
-// };
+const exp = { store, persistor };
 
-// const persistedContactsReducer = persistReducer(
-//     contactsPersistConfig,
-//     contacts
-// );
-
-// export const store = configureStore({
-//     reducer: {
-//         filter,
-//         contacts: persistedContactsReducer,
-//     },
-//     middleware: getDefaultMiddleware =>
-//         getDefaultMiddleware({
-//             serializableCheck: {
-//                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-//             },
-//         }),
-// });
-
-// export const persistor = persistStore(store);
+export default exp;

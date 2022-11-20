@@ -1,10 +1,12 @@
-.ContactList {
-    margin-top: 10px;
-    width: 355px;
-    padding: 20px;
-    padding-top: 0;
+.contacts {
+  margin: 0 auto;
+  max-width: max-content;
+  align-items: center;
+  flex-direction: column;
 }
 
-.ContactList__title {
-    text-align: center;
+.container {
+  width: 555px;
+  margin: 0 auto;
+  box-shadow: rgb(155, 245, 240) 33px 33px 88px 33px;
 }
